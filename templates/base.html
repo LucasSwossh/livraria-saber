@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Livraria Saber{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+
+  <!-- ======== Cabeçalho ======== -->
+  <header class="site-header">
+    <div class="header-inner">
+
+      <a href="{{ url_for('index') }}" class="logo">
+        <div class="logo-mark">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <rect x="2" y="2" width="7" height="9" rx="1" fill="currentColor" opacity=".9"/>
+            <rect x="11" y="2" width="7" height="9" rx="1" fill="currentColor" opacity=".6"/>
+            <rect x="2" y="13" width="16" height="5" rx="1" fill="currentColor" opacity=".4"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="logo-name">Livraria</span>
+          <span class="logo-accent">Saber</span>
+        </div>
+      </a>
+
+      <nav class="site-nav">
+        <a href="{{ url_for('index') }}" class="nav-link {% if request.endpoint == 'index' %}active{% endif %}">
+          Catálogo
+        </a>
+        <a href="{{ url_for('adicionar') }}" class="btn-header">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Novo Livro
+        </a>
+      </nav>
+
+      <!-- Hamburger mobile -->
+      <button class="hamburger" id="menuToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Menu mobile expandido -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="{{ url_for('index') }}">Catálogo</a>
+      <a href="{{ url_for('adicionar') }}">+ Novo Livro</a>
+    </div>
+  </header>
+
+  <!-- ======== Flash Messages ======== -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-container">
+        {% for cat, msg in messages %}
+          <div class="flash flash-{{ cat }}">
+            <span class="flash-icon">
+              {% if cat == 'sucesso' %}✓{% elif cat == 'erro' %}✕{% else %}ℹ{% endif %}
+            </span>
+            {{ msg }}
+            <button class="flash-close" onclick="this.parentElement.remove()">×</button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <!-- ======== Conteúdo ======== -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- ======== Rodapé ======== -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-brand">
+        <span>📚</span> Livraria Saber
+      </p>
+      <p class="footer-info">
+        Sistema desenvolvido com <strong>Flask</strong> &amp; <strong>SQLite</strong> · Metodologia RAD
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Hamburger menu toggle
+    const btn  = document.getElementById('menuToggle');
+    const menu = document.getElementById('mobileMenu');
+    btn?.addEventListener('click', () => {
+      menu.classList.toggle('open');
+      btn.classList.toggle('open');
+    });
+
+    // Auto-remove flash messages após 5s
+    setTimeout(() => {
+      document.querySelectorAll('.flash').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(-8px)';
+        setTimeout(() => el.remove(), 350);
+      });
+    }, 5000);
+  </script>
+
+</body>
+</html>
