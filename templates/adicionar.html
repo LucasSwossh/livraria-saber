@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Livraria Saber — Adicionar Livro</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+
+  <!-- ======== Cabeçalho ======== -->
+  <header>
+    <div class="header-inner">
+      <a href="{{ url_for('index') }}" class="logo">
+        <div class="logo-icon">📚</div>
+        <span class="logo-text">Livraria <span>Saber</span></span>
+      </a>
+      <nav>
+        <a href="{{ url_for('index') }}"    class="nav-btn nav-btn-ghost">← Voltar ao Catálogo</a>
+        <a href="{{ url_for('adicionar') }}" class="nav-btn nav-btn-primary">+ Novo Livro</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ======== Conteúdo principal ======== -->
+  <main class="container">
+
+    <!-- Hero -->
+    <section class="page-hero">
+      <p class="page-hero-label">✍️ Cadastro</p>
+      <h1>Adicionar Novo Livro</h1>
+      <p>Preencha os dados do título que deseja incluir no acervo.</p>
+    </section>
+
+    <!-- Formulário -->
+    <div class="form-card">
+      <form action="{{ url_for('adicionar') }}" method="POST">
+        <div class="form-grid">
+
+          <!-- Título -->
+          <div class="field">
+            <label for="titulo">Título do Livro</label>
+            <input
+              type="text"
+              id="titulo"
+              name="titulo"
+              placeholder="Ex.: Dom Casmurro"
+              required
+              maxlength="200"
+            />
+          </div>
+
+          <!-- Autor -->
+          <div class="field">
+            <label for="autor">Autor</label>
+            <input
+              type="text"
+              id="autor"
+              name="autor"
+              placeholder="Ex.: Machado de Assis"
+              required
+              maxlength="150"
+            />
+          </div>
+
+          <!-- Gênero -->
+          <div class="field">
+            <label for="genero">Gênero Literário</label>
+            <select id="genero" name="genero" required>
+              <option value="" disabled selected>Selecione um gênero…</option>
+              <option>Romance</option>
+              <option>Ficção Científica</option>
+              <option>Fantasia</option>
+              <option>Terror</option>
+              <option>Mistério / Thriller</option>
+              <option>Biografia</option>
+              <option>Autoajuda</option>
+              <option>Didático</option>
+              <option>História</option>
+              <option>Filosofia</option>
+              <option>Poesia</option>
+              <option>Outro</option>
+            </select>
+          </div>
+
+          <!-- Preço -->
+          <div class="field">
+            <label for="preco">Preço (R$)</label>
+            <input
+              type="text"
+              id="preco"
+              name="preco"
+              placeholder="Ex.: 49,90"
+              required
+              maxlength="20"
+              pattern="[\d.,]+"
+              title="Use apenas números, vírgulas e pontos. Ex.: 49,90"
+            />
+          </div>
+
+          <!-- Botões -->
+          <div class="form-actions">
+            <button type="submit" class="btn btn-submit">💾 Salvar Livro</button>
+            <a href="{{ url_for('index') }}" class="btn btn-cancel">Cancelar</a>
+          </div>
+
+        </div>
+      </form>
+    </div>
+
+  </main>
+
+  <!-- ======== Rodapé ======== -->
+  <footer>
+    <p>© 2025 <span>Livraria Saber</span> — Sistema desenvolvido com Flask &amp; SQLite</p>
+  </footer>
+
+</body>
+</html>

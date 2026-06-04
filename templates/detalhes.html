@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Livraria Saber — {{ livro['titulo'] }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+
+  <!-- ======== Cabeçalho ======== -->
+  <header>
+    <div class="header-inner">
+      <a href="{{ url_for('index') }}" class="logo">
+        <div class="logo-icon">📚</div>
+        <span class="logo-text">Livraria <span>Saber</span></span>
+      </a>
+      <nav>
+        <a href="{{ url_for('index') }}"    class="nav-btn nav-btn-ghost">← Voltar ao Catálogo</a>
+        <a href="{{ url_for('adicionar') }}" class="nav-btn nav-btn-primary">+ Novo Livro</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ======== Conteúdo principal ======== -->
+  <main class="container">
+
+    <!-- Hero -->
+    <section class="page-hero">
+      <p class="page-hero-label">🔍 Detalhes do Livro</p>
+      <h1>{{ livro['titulo'] }}</h1>
+      <p>Informações completas sobre este título no acervo.</p>
+    </section>
+
+    <!-- Layout de detalhes -->
+    <div class="details-layout">
+
+      <!-- Card principal -->
+      <div class="details-card">
+        <!-- Capa ilustrativa -->
+        <div class="details-cover">
+          <span class="cover-icon">📖</span>
+        </div>
+
+        <!-- Corpo do card -->
+        <div class="details-body">
+          <h2>{{ livro['titulo'] }}</h2>
+          <p class="autor-line">por <span>{{ livro['autor'] }}</span></p>
+
+          <div class="details-divider"></div>
+
+          <!-- Informações detalhadas -->
+          <div class="info-row">
+            <span class="info-label">ID no Sistema</span>
+            <span class="info-value">#{{ livro['id'] }}</span>
+          </div>
+
+          <div class="info-row">
+            <span class="info-label">Autor</span>
+            <span class="info-value">{{ livro['autor'] }}</span>
+          </div>
+
+          <div class="info-row">
+            <span class="info-label">Gênero Literário</span>
+            <span class="info-value">
+              <span class="genre-tag">{{ livro['genero'] }}</span>
+            </span>
+          </div>
+
+          <div class="info-row">
+            <span class="info-label">Preço</span>
+            <span class="info-value price">R$ {{ livro['preco'] }}</span>
+          </div>
+
+        </div><!-- /details-body -->
+      </div><!-- /details-card -->
+
+      <!-- Sidebar de ações -->
+      <aside class="sidebar-card">
+        <h3>Ações</h3>
+        <p>Navegue pelo sistema usando as opções abaixo.</p>
+
+        <div class="details-divider"></div>
+
+        <a href="{{ url_for('index') }}" class="btn btn-full btn-outline">
+          📋 Ver todos os livros
+        </a>
+        <a href="{{ url_for('adicionar') }}" class="btn btn-full btn-submit">
+          + Adicionar novo livro
+        </a>
+
+        <div class="details-divider"></div>
+
+        <!-- Informação complementar -->
+        <div style="font-size:0.78rem; color:var(--text-muted); line-height:1.6;">
+          <strong style="color:var(--text-secondary);">Gênero:</strong><br>
+          {{ livro['genero'] }}<br><br>
+          <strong style="color:var(--text-secondary);">Preço de capa:</strong><br>
+          <span style="color:var(--accent); font-weight:700; font-size:1rem;">
+            R$ {{ livro['preco'] }}
+          </span>
+        </div>
+      </aside>
+
+    </div><!-- /details-layout -->
+
+  </main>
+
+  <!-- ======== Rodapé ======== -->
+  <footer>
+    <p>© 2025 <span>Livraria Saber</span> — Sistema desenvolvido com Flask &amp; SQLite</p>
+  </footer>
+
+</body>
+</html>

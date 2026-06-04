@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Livraria Saber — Catálogo</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+
+  <!-- ======== Cabeçalho ======== -->
+  <header>
+    <div class="header-inner">
+      <a href="{{ url_for('index') }}" class="logo">
+        <div class="logo-icon">📚</div>
+        <span class="logo-text">Livraria <span>Saber</span></span>
+      </a>
+      <nav>
+        <a href="{{ url_for('index') }}"    class="nav-btn nav-btn-ghost">Catálogo</a>
+        <a href="{{ url_for('adicionar') }}" class="nav-btn nav-btn-primary">+ Novo Livro</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ======== Conteúdo principal ======== -->
+  <main class="container">
+
+    <!-- Hero -->
+    <section class="page-hero">
+      <p class="page-hero-label">📖 Acervo Digital</p>
+      <h1>Catálogo de Livros</h1>
+      <p>Explore e gerencie todos os títulos disponíveis na Livraria Saber.</p>
+    </section>
+
+    <!-- Tabela de livros -->
+    <div class="table-wrapper">
+      <div class="table-header">
+        <span class="table-title">Todos os livros</span>
+        <span class="badge">{{ livros|length }} título{% if livros|length != 1 %}s{% endif %}</span>
+      </div>
+
+      {% if livros %}
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Título</th>
+              <th>Autor</th>
+              <th>Gênero</th>
+              <th>Preço</th>
+              <th>Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for livro in livros %}
+            <tr>
+              <td style="color:var(--text-muted); font-variant-numeric:tabular-nums;">
+                {{ livro['id'] }}
+              </td>
+              <td class="td-title">{{ livro['titulo'] }}</td>
+              <td class="td-autor">{{ livro['autor'] }}</td>
+              <td><span class="genre-tag">{{ livro['genero'] }}</span></td>
+              <td class="td-preco">R$ {{ livro['preco'] }}</td>
+              <td>
+                <a href="{{ url_for('detalhes', livro_id=livro['id']) }}" class="btn-details">
+                  Ver detalhes →
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+      {% else %}
+        <!-- Estado vazio -->
+        <div class="empty-state">
+          <div class="empty-icon">📭</div>
+          <h3>Nenhum livro cadastrado</h3>
+          <p>Adicione o primeiro título ao catálogo da Livraria Saber.</p>
+          <a href="{{ url_for('adicionar') }}" class="nav-btn nav-btn-primary">
+            + Adicionar primeiro livro
+          </a>
+        </div>
+      {% endif %}
+    </div>
+
+  </main>
+
+  <!-- ======== Rodapé ======== -->
+  <footer>
+    <p>© 2025 <span>Livraria Saber</span> — Sistema desenvolvido com Flask &amp; SQLite</p>
+  </footer>
+
+</body>
+</html>
